@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/irgolic/AutoPR/main/trigger_schema.json
+
+triggers:
+  - branch_name: docs
+    run:
+      workflow: generate_readme_summaries
+      parameters:
+        FILE_SUMMARY_PROMPT: "Write an executive summary of this file, intended for someone seeing it for the first time. Write 3-6 bullet points, prefixed with emojis."
+        FILE_SUMMARY_INSTRUCTIONS: "Respond in 3-6 bullet points, using plenty of emojis."
+        FOLDER_SUMMARY_PROMPT: "Write an executive summary of this folder, intended for someone seeing it for the first time. Respond in 3-5 sentences."
+        FOLDER_SUMMARY_INSTRUCTIONS: "Respond in simple sentences, using plenty of emojis."
+        IGNORE_FILES:
+          - docs
+        EMPTY_FILE_SUMMARY: "This file is empty."
+      IGNORE_FILES:
+        - website
+        - .github
+        - .autopr
+        - tests
