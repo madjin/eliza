@@ -1,7 +1,8 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/irgolic/AutoPR/main/trigger_schema.json
 
 triggers:
-  - branch_name: docs
+  - type: "push"
+    branch_name: "docs"
     run:
       workflow: generate_readme_summaries
       parameters:
