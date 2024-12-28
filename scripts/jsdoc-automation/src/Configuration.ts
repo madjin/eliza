@@ -37,7 +37,6 @@ export class Configuration implements Omit<ConfigurationData, 'rootDirectory'> {
     private _rootDirectory!: ConfigurationData['rootDirectory'];
     private readonly repoRoot: string;
     private _branch: string = 'develop';
-
     public excludedDirectories: string[] = [];
     public repository: Repository = {
         owner: 'elizaOS',
