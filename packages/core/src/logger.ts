@@ -1,4 +1,16 @@
+/**
+ * Class representing a custom logging utility.
+ *
+ * @class
+ */
+ */
 class ElizaLogger {
+/**
+ * Constructor for ElizaLogger class.
+ * Checks if the code is running in a Node.js environment,
+ * sets the verbose flag based on the environment,
+ * and logs the initialization details.
+ */
     constructor() {
         // Check if we're in Node.js environment
         this.isNode =
@@ -30,6 +42,13 @@ class ElizaLogger {
     debugsTitle = "DEBUG";
     assertsTitle = "ASSERT";
 
+/**
+ * Get the CSS styling for foreground and background colors based on the provided color names.
+ * If running in a browser environment, it returns the CSS styling. If running in a Node.js environment, it returns the ANSI escape codes for console coloring.
+ * @param {string} foregroundColor - The name of the foreground color. Default is an empty string.
+ * @param {string} backgroundColor - The name of the background color. Default is an empty string.
+ * @returns {string} The CSS styling for the colors if in a browser environment, or ANSI escape codes for console coloring if in a Node.js environment.
+ */
     #getColor(foregroundColor = "", backgroundColor = "") {
         if (!this.isNode) {
             // Browser console styling
@@ -109,14 +128,31 @@ class ElizaLogger {
         return `${fgc}${bgc}`;
     }
 
+/**
+ * Get the color reset code based on the environment.
+ * 
+ * @returns {string} The color reset code ("\x1b[0m" in Node environment, empty string otherwise).
+ */
     #getColorReset() {
         return this.isNode ? "\x1b[0m" : "";
     }
 
+/**
+ * Clears the console by calling console.clear()
+ */
     clear() {
         console.clear();
     }
 
+/**
+ * Prints the provided strings with the specified foreground color and background color.
+ * If objects are provided in the strings, they are converted to strings using JSON.stringify.
+ *
+ * @param {string} foregroundColor - The foreground color for the printed text. Default is "white".
+ * @param {string} backgroundColor - The background color for the printed text. Default is "black".
+ * @param {Array.<string|object>} strings - The strings to be printed.
+ * @returns {void}
+ */
     print(foregroundColor = "white", backgroundColor = "black", ...strings) {
         // Convert objects to strings
         const processedStrings = strings.map((item) => {
@@ -139,6 +175,15 @@ class ElizaLogger {
         if (this.closeByNewLine) console.log("");
     }
 
+/**
+ * Logs the given strings with a specified style, including foreground and background colors, icon, and group title.
+ * @param {any[]} strings - An array of strings to be logged.
+ * @param {object} options - An object containing the style options with the following properties:
+ * @param {string} options.fg - The foreground color for the log.
+ * @param {string} options.bg - The background color for the log.
+ * @param {string} options.icon - The icon to display along with the group title.
+ * @param {string} options.groupTitle - The title for the log group.
+ */
     #logWithStyle(
         strings: any[],
         options: {
@@ -181,6 +226,12 @@ class ElizaLogger {
         }
     }
 
+/**
+ * Logs the given strings with specified style.
+ * 
+ * @param {...string} strings - The strings to be logged
+ * @returns {void}
+ */
     log(...strings) {
         this.#logWithStyle(strings, {
             fg: "white",
@@ -190,6 +241,11 @@ class ElizaLogger {
         });
     }
 
+/**
+ * Logs warning messages with a specified style.
+ * 
+ * @param {...string} strings - The messages to log as warnings.
+ */
     warn(...strings) {
         this.#logWithStyle(strings, {
             fg: "yellow",
@@ -199,6 +255,10 @@ class ElizaLogger {
         });
     }
 
+/**
+* Logs an error message with red foreground color, no background color, and an exclamation icon.
+* @param {...string} strings - The error message to log
+*/
     error(...strings) {
         this.#logWithStyle(strings, {
             fg: "red",
@@ -208,6 +268,11 @@ class ElizaLogger {
         });
     }
 
+/**
+ * Logs information with blue foreground color and information icon.
+ * 
+ * @param {...string} strings - Strings to be logged
+ */
     info(...strings) {
         this.#logWithStyle(strings, {
             fg: "blue",
@@ -217,6 +282,11 @@ class ElizaLogger {
         });
     }
 
+/**
+ * Logs debug messages with specified styling if verbose mode is enabled.
+ * 
+ * @param {...string} strings - The debug messages to log.
+ */
     debug(...strings) {
         if (!this.verbose) {
             // for diagnosing verbose logging issues
@@ -234,6 +304,10 @@ class ElizaLogger {
         });
     }
 
+/**
+ * Logs the given strings with a green style and a checkmark icon to indicate success.
+ * @param {...string} strings - The strings to be logged
+ */
     success(...strings) {
         this.#logWithStyle(strings, {
             fg: "green",
@@ -243,6 +317,10 @@ class ElizaLogger {
         });
     }
 
+/**
+ * Asserts the provided strings and logs them with a cyan foreground color, no background color, and an exclamation icon.
+ * @param {...string} strings - The strings to be logged
+ */
     assert(...strings) {
         this.#logWithStyle(strings, {
             fg: "cyan",
@@ -252,6 +330,11 @@ class ElizaLogger {
         });
     }
 
+/**
+ * Displays a progress message either by updating the current line or by logging a new line.
+ * 
+ * @param {string} message - The message to be displayed as progress.
+ */
     progress(message: string) {
         if (this.isNode) {
             // Clear the current line and move cursor to beginning
