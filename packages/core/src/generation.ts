@@ -50,6 +50,16 @@ import { fal } from "@fal-ai/client";
  * @returns The completed message.
  */
 
+/**
+ * Generates text using the specified runtime, context, modelClass, stop words, and custom system prompt.
+ * @param {Object} params - The parameters for generating text.
+ * @param {IAgentRuntime} params.runtime - The runtime for the agent.
+ * @param {string} params.context - The context for generating text.
+ * @param {string} params.modelClass - The class of the model to be used.
+ * @param {string[]} [params.stop] - Optional additional stop words.
+ * @param {string} [params.customSystemPrompt] - Optional custom system prompt.
+ * @returns {Promise<string>} A promise that resolves to the generated text.
+ */
 export async function generateText({
     runtime,
     context,
