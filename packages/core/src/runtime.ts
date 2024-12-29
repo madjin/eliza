@@ -51,6 +51,11 @@ import { stringToUuid } from "./uuid.ts";
  * Represents the runtime environment for an agent, handling message processing,
  * action registration, and interaction with external services like OpenAI and Supabase.
  */
+/**
+ * AgentRuntime class that implements the IAgentRuntime interface.
+ * Provides various functionalities related to the agent runtime.
+ * @class
+ */
 export class AgentRuntime implements IAgentRuntime {
     /**
      * Default count for recent messages to be kept in memory.
