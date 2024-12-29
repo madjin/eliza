@@ -39,7 +39,7 @@ export class Configuration implements Omit<ConfigurationData, 'rootDirectory'> {
     private _branch: string = 'develop';
     public excludedDirectories: string[] = [];
     public repository: Repository = {
-        owner: 'madjin',
+        owner: 'elizaos',
         name: 'eliza',
         pullNumber: undefined
     };
