@@ -5,6 +5,13 @@ import { stringToUuid } from "./uuid.ts";
 import { splitChunks } from "./generation.ts";
 import elizaLogger from "./logger.ts";
 
+/**
+ * Retrieves knowledge items based on a provided message content.
+ * 
+ * @param {AgentRuntime} runtime - The current AgentRuntime.
+ * @param {Memory} message - The message containing the content to search for knowledge.
+ * @returns {Promise<KnowledgeItem[]>} - An array of KnowledgeItem objects.
+ */
 async function get(
     runtime: AgentRuntime,
     message: Memory
@@ -64,6 +71,15 @@ async function get(
         .map((memory) => ({ id: memory.id, content: memory.content }));
 }
 
+/**
+ * Set knowledge item in the memory of the agent.
+ * 
+ * @param {AgentRuntime} runtime - The agent runtime object.
+ * @param {KnowledgeItem} item - The knowledge item to be set in memory.
+ * @param {number} [chunkSize=512] - The size of each chunk to split the content into.
+ * @param {number} [bleed=20] - The amount of overlap between chunks.
+ * @returns {Promise<void>} - A Promise that resolves when the knowledge item is successfully set in memory.
+ */
 async function set(
     runtime: AgentRuntime,
     item: KnowledgeItem,
@@ -102,6 +118,13 @@ async function set(
     }
 }
 
+/**
+ * Preprocesses the given content by removing code blocks, inline code, headers, image links, links, Discord mentions,
+ * HTML tags, horizontal rules, comments, special characters, and normalizing whitespace.
+ * 
+ * @param {string} content - The content to preprocess
+ * @returns {string} The preprocessed content
+ */
 export function preprocess(content: string): string {
     elizaLogger.debug("Preprocessing text:", {
         input: content,
