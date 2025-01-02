@@ -3,7 +3,6 @@
  *
  * @class
  */
- */
 class ElizaLogger {
 /**
  * Constructor for ElizaLogger class.

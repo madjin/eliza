@@ -1,5 +1,6 @@
 import { AIService } from './AIService.js';
 import { ASTQueueItem } from './types/index.js';
+import { JsDocCleaner } from './JsDocCleaner.js';
 
 /**
  * A class that generates JSDoc comments for code snippets and classes.
@@ -9,7 +10,7 @@ export class JsDocGenerator {
      * Constructor for a class that takes in an AIService instance.
      * @param {AIService} aiService - The AIService instance to be injected into the class.
      */
-    constructor(public aiService: AIService) { }
+    constructor(public aiService: AIService) {}
 
     /**
      * Generates a comment based on the given ASTQueueItem.
@@ -20,7 +21,7 @@ export class JsDocGenerator {
     public async generateComment(queueItem: ASTQueueItem): Promise<string> {
         const prompt = this.buildPrompt(queueItem);
         const comment = await this.aiService.generateComment(prompt);
-        return comment;
+        return JsDocCleaner.clean(comment);
     }
 
     /**
@@ -29,29 +30,20 @@ export class JsDocGenerator {
      * @param {ASTQueueItem} queueItem - The ASTQueueItem to generate the comment for.
      * @returns {Promise<string>} The generated comment for the class.
      */
-    public async generateClassComment(
-        queueItem: ASTQueueItem,
-    ): Promise<string> {
+    public async generateClassComment(queueItem: ASTQueueItem): Promise<string> {
         const prompt = this.buildClassPrompt(queueItem);
         const comment = await this.aiService.generateComment(prompt);
-        return comment;
+        return JsDocCleaner.clean(comment);
     }
 
-    /**
-     * Builds a prompt with the JSDoc comment for the provided ASTQueueItem code.
-     * 
-     * @param {ASTQueueItem} queueItem The ASTQueueItem object containing the code to extract the JSDoc comment from.
-     * @returns {string} The JSDoc comment extracted from the code provided in the ASTQueueItem object.
-     */
     private buildPrompt(queueItem: ASTQueueItem): string {
         return `Generate JSDoc comment for the following code:
-
 
         \`\`\`typescript
         ${queueItem.code}
         \`\`\`
         
-        Only return the JSDoc comment, not the code itself.
+        Only return the JSDoc comment with proper formatting, not the code itself.
         `;
     }
 
@@ -59,7 +51,6 @@ export class JsDocGenerator {
         queueItem: ASTQueueItem,
     ): string {
         return `Generate JSDoc comment for the following Class:
-
         Class name: ${queueItem.code.match(/class (\w+)/)?.[1]}
 
         Only return the JSDoc for the Class itself, not the methods or anything in the class.

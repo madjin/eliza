@@ -68,7 +68,7 @@ export class MemoryCacheAdapter implements ICacheAdapter {
  * Class representing a file system cache adapter.
  * Implements the ICacheAdapter interface.
  */
-    **/
+
 export class FsCacheAdapter implements ICacheAdapter {
 /**
  * Constructor for creating an instance with a specified data directory.
@@ -172,7 +172,6 @@ export class DbCacheAdapter implements ICacheAdapter {
 /**
  * A class representing a Cache Manager.
  */
- **/
 export class CacheManager<CacheAdapter extends ICacheAdapter = ICacheAdapter>
     implements ICacheManager
 {

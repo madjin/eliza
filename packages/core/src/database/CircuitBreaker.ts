@@ -8,7 +8,6 @@ export type CircuitBreakerState = "CLOSED" | "OPEN" | "HALF_OPEN";
  * Represents a Circuit Breaker that can monitor the status of a system and prevent overload.
  * @class
  */
- */
 export class CircuitBreaker {
     private state: CircuitBreakerState = "CLOSED";
     private failureCount: number = 0;
@@ -75,7 +74,6 @@ export class CircuitBreaker {
 /**
  * Increments the failure count and updates the last failure time.
  * If the failure count exceeds the failure threshold, changes the state to "OPEN".
- */
  */
     private handleFailure(): void {
         this.failureCount++;
